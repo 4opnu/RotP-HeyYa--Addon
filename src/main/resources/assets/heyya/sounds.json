@@ -1,0 +1,77 @@
+{
+  "hey_ya_talk_1": {
+    "sounds": [
+      "heyya:talk_1"
+    ]
+  },
+  "hey_ya_talk_2": {
+    "sounds": [
+      "heyya:talk_2"
+    ]
+  },
+  "hey_ya_ore_sense": {
+    "sounds": [
+      "heyya:ore_sense"
+    ]
+  },
+  "hey_ya_danger": {
+    "sounds": [
+      "heyya:danger"
+    ]
+  },
+  "hey_ya_panic_breath": {
+    "sounds": [
+      "heyya:panic_breath"
+    ]
+  },
+  "hey_ya_flowey_talk_1": {
+    "sounds": [
+      "heyya:flowey_talk_1"
+    ]
+  },
+  "hey_ya_flowey_talk_2": {
+    "sounds": [
+      "heyya:flowey_talk_2"
+    ]
+  },
+  "hey_ya_flowey_talk_3": {
+    "sounds": [
+      "heyya:flowey_talk_3"
+    ]
+  },
+  "hey_ya_flowey_ore": {
+    "sounds": [
+      "heyya:flowey_ore"
+    ]
+  },
+  "hey_ya_flowey_danger": {
+    "sounds": [
+      "heyya:flowey_danger"
+    ]
+  },
+  "hey_ya_chara_talk_1": {
+    "sounds": [
+      "heyya:chara_talk_1"
+    ]
+  },
+  "hey_ya_chara_talk_2": {
+    "sounds": [
+      "heyya:chara_talk_2"
+    ]
+  },
+  "hey_ya_chara_talk_3": {
+    "sounds": [
+      "heyya:chara_talk_3"
+    ]
+  },
+  "hey_ya_chara_ore": {
+    "sounds": [
+      "heyya:chara_ore"
+    ]
+  },
+  "hey_ya_chara_danger": {
+    "sounds": [
+      "heyya:chara_danger"
+    ]
+  }
+}

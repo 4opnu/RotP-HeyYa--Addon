@@ -1,0 +1,16 @@
+{
+  "skins": {
+    "heyya:hey_ya": {
+      "stand_type": "heyya:hey_ya",
+      "color": "0xF5C542"
+    },
+    "heyya:flowey": {
+      "stand_type": "heyya:hey_ya",
+      "color": "0xF2D21B"
+    },
+    "heyya:chara": {
+      "stand_type": "heyya:hey_ya",
+      "color": "0xB02A2A"
+    }
+  }
+}
