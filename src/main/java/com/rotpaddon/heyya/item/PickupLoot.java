@@ -23,6 +23,9 @@ import net.minecraftforge.registries.ForgeRegistries;
  *   5% - ядовитое взрывное зелье (яд на 15 секунд)
  *   4% - железный топор на 1 использование
  *   1% - камень Аджи (jojo:aja_stone)
+ *
+ * Автонаходка (раз в 10-15 минут, без участия игрока) - вместо оружия выдаёт ресурсы, см. rollResource():
+ *  50% - железный слиток, 30% - золотой слиток, 20% - алмаз
  */
 public class PickupLoot {
     private static final int POISON_TICKS = 15 * 20;
@@ -42,6 +45,18 @@ public class PickupLoot {
             return singleUseIronAxe();
         }
         return fromRegistry("aja_stone");
+    }
+
+    /** Награда автонаходки: 50% железный слиток, 30% золотой слиток, 20% алмаз. */
+    public static ItemStack rollResource(Random random) {
+        int r = random.nextInt(100);      // 0..99
+        if (r < 50) {
+            return new ItemStack(Items.IRON_INGOT);
+        }
+        if (r < 80) {
+            return new ItemStack(Items.GOLD_INGOT);
+        }
+        return new ItemStack(Items.DIAMOND);
     }
 
     /** Предмет оригинального мода по id jojo:<name>. Если не найден - выдаём булыжник, чтобы не остаться без награды. */

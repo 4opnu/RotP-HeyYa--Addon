@@ -377,9 +377,42 @@ public class HeyYaEntity extends StandEntity {
     private static final double PICKUP_MIN_DISTANCE = 4.0;
     private static final double PICKUP_MAX_DISTANCE = 5.0;
     private UUID lastPickupId;
+    private UUID lastAutoPickupId;
 
-    /** Создаёт светящийся квадрат-находку в 4-5 блоках от владельца и говорит об этом. */
+    // ======================= Автонаходка =======================
+    /** Раз в сколько тиков стенд сам находит ресурсы: случайно от 10 до 15 минут. */
+    public static final int AUTO_FIND_MIN_TICKS = 10 * 60 * 20;
+    public static final int AUTO_FIND_MAX_TICKS = 15 * 60 * 20;
+    private int autoFindTimer = -1;
+
+    private int nextAutoFindDelay() {
+        return AUTO_FIND_MIN_TICKS + level.random.nextInt(AUTO_FIND_MAX_TICKS - AUTO_FIND_MIN_TICKS + 1);
+    }
+
+    /** Раз в 10-15 минут стенд сам кидает находку с ресурсами (железо 50% / золото 30% / алмаз 20%). */
+    private void updateAutoFind() {
+        if (!greeted) {
+            return;
+        }
+        if (autoFindTimer < 0) {
+            autoFindTimer = nextAutoFindDelay();
+        }
+        if (--autoFindTimer <= 0) {
+            autoFindTimer = nextAutoFindDelay();
+            dropPickupNearUser(true);
+        }
+    }
+
+    /** Способность «Используй это!»: находка с обычной наградой (PickupLoot.roll). */
     public void dropPickupNearUser() {
+        dropPickupNearUser(false);
+    }
+
+    /**
+     * Создаёт светящийся квадрат-находку в 4-5 блоках от владельца и говорит об этом.
+     * @param resources true - автонаходка (ресурсы вместо оружия), false - обычная от способности
+     */
+    public void dropPickupNearUser(boolean resources) {
         if (level.isClientSide()) {
             return;
         }
@@ -388,9 +421,11 @@ public class HeyYaEntity extends StandEntity {
             return;
         }
 
-        // Прошлая находка пропадает, чтобы на карте не копились квадраты
-        if (lastPickupId != null && level instanceof ServerWorld) {
-            Entity old = ((ServerWorld) level).getEntity(lastPickupId);
+        // Прошлая находка того же вида пропадает, чтобы на карте не копились квадраты
+        // (ручная и автоматическая отслеживаются отдельно и друг друга не удаляют)
+        UUID previous = resources ? lastAutoPickupId : lastPickupId;
+        if (previous != null && level instanceof ServerWorld) {
+            Entity old = ((ServerWorld) level).getEntity(previous);
             if (old != null) {
                 old.remove();
             }
@@ -399,8 +434,14 @@ public class HeyYaEntity extends StandEntity {
         Vector3d spot = findPickupSpot(user);
         HeyYaPickupEntity pickup = new HeyYaPickupEntity(InitEntities.PICKUP.get(), level);
         pickup.setPos(spot.x, spot.y, spot.z);
+        pickup.setResourceLoot(resources);
         level.addFreshEntity(pickup);
-        lastPickupId = pickup.getUUID();
+        if (resources) {
+            lastAutoPickupId = pickup.getUUID();
+        }
+        else {
+            lastPickupId = pickup.getUUID();
+        }
 
         if (user instanceof PlayerEntity) {
             ((PlayerEntity) user).displayClientMessage(
@@ -445,6 +486,7 @@ public class HeyYaEntity extends StandEntity {
             if (!level.isClientSide()) {
                 syncSkin(user);
                 updateSpeechSchedule(user);
+                updateAutoFind();
             }
         }
 

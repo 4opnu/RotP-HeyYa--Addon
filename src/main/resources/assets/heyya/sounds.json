@@ -73,5 +73,53 @@
     "sounds": [
       "heyya:chara_danger"
     ]
+  },
+  "hey_ya_ost_30": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_30",
+        "stream": true
+      }
+    ]
+  },
+  "hey_ya_ost_60": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_full",
+        "stream": true
+      }
+    ]
+  },
+  "hey_ya_ost_75": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_full",
+        "stream": true
+      }
+    ]
+  },
+  "hey_ya_ost_90": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_full",
+        "stream": true
+      }
+    ]
+  },
+  "hey_ya_ost_120": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_full",
+        "stream": true
+      }
+    ]
+  },
+  "hey_ya_ost_full": {
+    "sounds": [
+      {
+        "name": "heyya:ost/hey_ya_full",
+        "stream": true
+      }
+    ]
   }
 }

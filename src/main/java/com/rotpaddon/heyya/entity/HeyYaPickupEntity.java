@@ -22,12 +22,20 @@ import net.minecraftforge.fml.network.NetworkHooks;
 /**
  * Булыжник, наполовину торчащий из земли. ПКМ - подобрать случайный предмет (см. PickupLoot).
  * Исчезает сам через минуту.
+ * Если находка создана автоматически (resourceLoot), вместо оружия внутри ресурсы (PickupLoot.rollResource).
  */
 public class HeyYaPickupEntity extends Entity {
     private static final int LIFETIME_TICKS = 20 * 60;
 
     /** Контур свечения вокруг булыжника (виден и сквозь стены). По умолчанию выключен: подсветка и так заметна. */
     private static final boolean GLOW_OUTLINE = false;
+
+    /** true - автонаходка: награда из PickupLoot.rollResource(), а не из roll(). */
+    private boolean resourceLoot = false;
+
+    public void setResourceLoot(boolean resourceLoot) {
+        this.resourceLoot = resourceLoot;
+    }
 
     public HeyYaPickupEntity(EntityType<?> type, World world) {
         super(type, world);
@@ -40,10 +48,14 @@ public class HeyYaPickupEntity extends Entity {
     protected void defineSynchedData() {}
 
     @Override
-    protected void readAdditionalSaveData(CompoundNBT nbt) {}
+    protected void readAdditionalSaveData(CompoundNBT nbt) {
+        resourceLoot = nbt.getBoolean("ResourceLoot");
+    }
 
     @Override
-    protected void addAdditionalSaveData(CompoundNBT nbt) {}
+    protected void addAdditionalSaveData(CompoundNBT nbt) {
+        nbt.putBoolean("ResourceLoot", resourceLoot);
+    }
 
     @Override
     public IPacket<?> getAddEntityPacket() {
@@ -82,7 +94,7 @@ public class HeyYaPickupEntity extends Entity {
             return ActionResultType.PASS;
         }
         if (!level.isClientSide()) {
-            ItemStack stack = PickupLoot.roll(level.random);
+            ItemStack stack = resourceLoot ? PickupLoot.rollResource(level.random) : PickupLoot.roll(level.random);
             ItemStack shown = stack.copy();
             if (!player.inventory.add(stack)) {
                 player.drop(stack, false);

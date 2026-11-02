@@ -3,6 +3,7 @@ package com.rotpaddon.heyya.init;
 import java.util.function.Supplier;
 
 import com.github.standobyte.jojo.init.ModSounds;
+import com.github.standobyte.jojo.util.mc.OstSoundList;
 import com.rotpaddon.heyya.AddonMain;
 
 import net.minecraft.util.ResourceLocation;
@@ -14,6 +15,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class InitSounds {
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(
             ForgeRegistries.SOUND_EVENTS, AddonMain.MOD_ID);
+
+    // OST Hey Ya!: RotP сам включает его, когда у владельца стенда появляется эффект Решимости.
+    // OstSoundList регистрирует события hey_ya_ost_30, _60, _75, _90, _120 и _full (по длине Решимости).
+    public static final OstSoundList HEY_YA_OST = new OstSoundList(new ResourceLocation(AddonMain.MOD_ID, "hey_ya_ost"), SOUNDS);
 
     // Призыв/развоплощение: стандартные звуки RotP
     public static final Supplier<SoundEvent> HEY_YA_SUMMON_SOUND = ModSounds.STAND_SUMMON_DEFAULT;

@@ -92,6 +92,7 @@ public class InitStands {
                             .durability(12)     // B (выносливость: ранг B при значении 11..13.99)
                             .precision(1)       // E
                             .build())
+                    .addOst(InitSounds.HEY_YA_OST)      // музыка при Решимости (только у владельца Hey Ya!)
                     .build(),
 
                     InitEntities.ENTITIES,
